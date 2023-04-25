@@ -16,14 +16,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install Sphinx sphinx-rtd-theme Django django-handyhelpers
 
-    - name: "Run Shpinx"
+    - name: "Run Sphinx"
       run: |
         cd docs
         make html
 
     - name: "Deploy"
       uses: peaceiris/actions-gh-pages@v3
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      #if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       with:
         publish_branch: gh-pages
         github_token: ${{ secrets.GITHUB_TOKEN }}
