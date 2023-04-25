@@ -6,14 +6,12 @@ jobs:
 
   build_docs_job:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: "Set up python 3.x"
-        uses: actions/checkout@v3
-        with:
-          python-version: 3.x
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+        fetch-depth: 0
 
       - name: "Install dependencies"
         run: |
@@ -21,22 +19,18 @@ jobs:
           pip install Sphinx sphinx-rtd-theme Django django-handyhelpers
 
       - name: "Make sphinx docs"
-        run: make -C docs html
+        run: |
+          make -C docs html
+          touch docs/build/html/.nojekyll
 
       - name: "Init new report is dist folder and commit generated files"
         run: |
-          cd docs/build/html
-          git init
-          touch .nojekyll
-          git add -A
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "deploy"
+          git commit -a -m "deploy"
 
       - name: GitHub Push
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          force: true
-          directory: ./docs/build/html
