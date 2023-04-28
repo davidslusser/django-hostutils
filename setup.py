@@ -1,7 +1,5 @@
 from setuptools import setup
 
-# setup(use_scm_version=True)
-
 
 # https://stackoverflow.com/questions/75091265/python-setuptools-scm-get-version-from-git-tags
 # https://github.com/pypa/setuptools_scm#importing-in-setuppy
