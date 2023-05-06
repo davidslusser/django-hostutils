@@ -1,3 +1,45 @@
+[build-system]
+requires = ["setuptools>=67", "setuptools_scm[toml]>=6.2", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+authors = [
+    {name = "David Slusser", email = "dbslusser@gmail.com"},
+    ]
+description = "host utilities for django projects"
+license = {file = "LICENSE"}
+keywords = ["django", "gui", "host", "utilities"]
+name = "django-hostutils"
+
+dependencies = [
+    "django",
+    "django-handyhelpers",
+    "psutil",
+]
+dynamic = ["version"]
+readme = "README.md"
+
+[project.optional-dependencies]
+dev = [
+    "bandit",
+    "black",
+    "build",
+    "mypy",
+    "mypy-extensions",
+    "pylint",
+    "pytest",
+    "pytest-cov",
+    "pytest-django",
+    "types-python-dateutil",
+    "typing_extensions",
+]
+
+[project.urls]
+homepage = "https://github.com/davidslusser/django-hostutils"
+documentation = "https://django-hostutils.readthedocs.io/en/latest/index.html "
+repository = "https://github.com/davidslusser/django-hostutils"
+
+
 [tool.bandit]
 exclude_dirs = ["venv", "tests"]
 
@@ -14,6 +56,10 @@ show_missing = true
 branch = true
 source = ["tests"]
 omit = ["*_test.py", "*/tests/*", "*_version.py", "setup.py"]
+
+
+[tool.distutils.bdist_wheel]
+universal = true
 
 
 [tool.flake8]
@@ -50,5 +96,11 @@ filterwarnings = [
     "ignore::UserWarning",
 ]
 
-[tool.setuptools_scm]
-write_to = "src/djangoaddicts/hostutils/_version.py"
+
+[tool.setuptools]
+include-package-data = true
+
+
+[tool.setuptools.packages.find]
+include = ["src*"]
+exclude = ["docs*", "tests*"]
